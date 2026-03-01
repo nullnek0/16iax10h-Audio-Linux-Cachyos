@@ -170,7 +170,7 @@ options root=PARTUUID=your-root-partition-uuid rw snd_intel_dspcfg.dsp_driver=3
 
 Replace `your-root-partition-uuid` with your actual root partition UUID (find it by running `blkid`).
 
-**Note:** You must include `snd_intel_dspcfg.dsp_driver=3` in your kernel boot parameters.
+**Note:** You must include `snd_intel_dspcfg.dsp_driver=3` in your kernel boot parameters. For some devices however, such as the Legion Y9000P, `snd_intel_dspcfg.dsp_driver=1` works instead.
 
 </details>
 
@@ -200,7 +200,7 @@ options root=UUID=your-root-partition-uuid rw snd_intel_dspcfg.dsp_driver=3
 
 Replace `your-root-partition-uuid` with your actual root partition UUID (find it by running `blkid`).
 
-**Note:** You must include `snd_intel_dspcfg.dsp_driver=3` in your kernel boot parameters.
+**Note:** You must include `snd_intel_dspcfg.dsp_driver=3` in your kernel boot parameters. For some devices however, such as the Legion Y9000P, `snd_intel_dspcfg.dsp_driver=1` works instead.
 
 </details>
 
