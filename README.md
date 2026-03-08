@@ -2,7 +2,61 @@
 
 This guide explains how to get audio working correctly on the Lenovo Legion Pro 7i Gen 10 (**16IAX10H**). Since this solution is still very new, it will take some time for all components to be properly integrated into the Linux kernel. Until that happens, you can follow the steps below, which have been rigorously tested and are confirmed to work. This guide will be updated for future kernel versions as they are released, until the fix is fully integrated into the kernel.
 
+I use the linux-cachyos-bore kernel
 
+You can use this repo to build cachyos kernel : linux-cachyos
+
+Example build 6.19.5-2 kernel, you can
+
+1.checkout this commit: 4a363451cc86ff5304514c8bf25eac42eb46b8c8
+
+2.cd linux-cachyos-bore
+
+3.copy 16iax10h-audio-linux-6.19.patch into this path
+
+4.add patch code into PKGBUILD, like:
+
+_nv_open_pkg="NVIDIA-kernel-module-source-${_nv_ver}"
+source=(
+    "https://github.com/CachyOS/linux/releases/download/${_srctag}/${_srctag}.tar.gz"
+    "config")
+
+source+=("16iax10h-audio-linux-6.19.patch")        <--------- here
+
+# LLVM makedepends
+if _is_lto_kernel; then
+5.add audio config to the end of config, like:
+
+CONFIG_IO_URING_ZCRX=y
+CONFIG_SND_HDA_SCODEC_AW88399=m                <--------- start
+CONFIG_SND_HDA_SCODEC_AW88399_I2C=m
+CONFIG_SND_SOC_AW88399=m
+CONFIG_SND_SOC_SOF_INTEL_TOPLEVEL=y
+CONFIG_SND_SOC_SOF_INTEL_COMMON=m
+CONFIG_SND_SOC_SOF_INTEL_MTL=m
+CONFIG_SND_SOC_SOF_INTEL_LNL=m                      <--------- end
+6.you can skip checksum to build kernel:
+
+makepkg --skipchecksums -sfi
+
+or fix checksum than build:
+
+makepkg -sfi
+
+7.waiting the build finish, and will auto install new kernel
+
+8.update boot config & cpoy some .conf to /usr/share/alsa/ucm2/HDA/
+
+9.reboot
+
+10.reset audio card
+
+alsaucm -c hw:1 reset
+alsaucm -c hw:1 reload
+systemctl --user restart pipewire pipewire-pulse wireplumber
+amixer sset -c 1 Master 100% unmute
+amixer sset -c 1 Headphone 100% unmute
+amixer sset -c 1 Speaker 100% unmute
 
 ## Disclaimer
 
