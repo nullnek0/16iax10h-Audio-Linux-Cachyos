@@ -19,14 +19,15 @@ source+=("16iax10h-audio-linux-7.0-compat.patch")        <--------- here
 if _is_lto_kernel; then
 5.add audio config to the end of config, like:
 
-CONFIG_IO_URING_ZCRX=y
-CONFIG_SND_HDA_SCODEC_AW88399=m                <--------- start
+
+CONFIG_SND_HDA_SCODEC_AW88399=m                
 CONFIG_SND_HDA_SCODEC_AW88399_I2C=m
 CONFIG_SND_SOC_AW88399=m
 CONFIG_SND_SOC_SOF_INTEL_TOPLEVEL=y
 CONFIG_SND_SOC_SOF_INTEL_COMMON=m
 CONFIG_SND_SOC_SOF_INTEL_MTL=m
-CONFIG_SND_SOC_SOF_INTEL_LNL=m                      <--------- end
+CONFIG_SND_SOC_SOF_INTEL_LNL=m                    
+
 6.you can skip checksum to build kernel:
 
 makepkg --skipchecksums -sfi
