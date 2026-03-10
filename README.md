@@ -46,7 +46,10 @@ makepkg -sfi
 
 9.reboot
 
-10.reset audio card
+10. install 595 nvidia open dkms driver packages
+    sudo pacman -U https://archive.cachyos.org/nvidia/595-beta/nvidia-open-dkms-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/nvidia-utils-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/opencl-nvidia-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/lib32-nvidia-utils-595.45.04-0-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/lib32-opencl-nvidia-595.45.04-0-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/libxnvctrl-595.45.04-1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/nvidia-settings-595.45.04-1-x86_64.pkg.tar.zst
+
+11.reset audio card
 
 alsaucm -c hw:1 reset
 alsaucm -c hw:1 reload
