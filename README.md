@@ -6,18 +6,27 @@ This guide explains how to get audio working correctly on the Lenovo Legion Pro 
 
 3.copy aw88399-legion.patch into this path
 
-4.add patch code into PKGBUILD, like:
+4.add patch code into PKGBUILD , like:
 
-        # Skip our custom patch so we can apply it manually with fuzz
-        [[ "$src" == "aw88399-legion.patch" ]] && continue
+existing----->        local src
+        for src in "${source[@]}"; do
+            src="${src%%::*}"
+            # Skip nvidia patches
+            [[ "$src" == "${_patchsource}"/misc/nvidia/*.patch ]] && continue
+            src="${src##*/}"
+            src="${src%.zst}"
+            [[ $src = *.patch ]] || continue
+            
+            # Skip our custom patch so we can apply it manually with fuzz
+            [[ "$src" == "aw88399-legion.patch" ]] && continue
 
-        echo "Applying patch $src..."
-        patch -Np1 < "../$src"
-    done
+            echo "Applying patch $src..."
+            patch -Np1 < "../$src"
+        done
 
-    # Apply the AW88399 Legion patch with fuzz allowed
-    echo "Applying patch aw88399-legion.patch with fuzz..."
-    patch -Np1 --fuzz=3 -i "$startdir/aw88399-legion.patch"
+        # Apply the AW88399 Legion patch with fuzz allowed
+        echo "Applying patch aw88399-legion.patch with fuzz..."
+        patch -Np1 --fuzz=3 -i "$startdir/aw88399-legion.patch"
 
 # LLVM makedepends
 if _is_lto_kernel; then
