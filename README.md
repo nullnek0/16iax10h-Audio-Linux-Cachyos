@@ -13,7 +13,7 @@ source=(
     "https://github.com/CachyOS/linux/releases/download/${_srctag}/${_srctag}.tar.gz"
     "config")
 
-source+=("16iax10h-audio-linux-7.0-compat.patch")        <--------- here
+source+=("aw88399-legion.patch")        <--------- here
 
 # LLVM makedepends
 if _is_lto_kernel; then
