@@ -248,14 +248,33 @@ you can use terminal or just find the folder in your file browser and paste it.
 
 18. (optional) if your nvidia drivers are not working do not fret sometimes the open nvidia dkms module is a pain in the ass simply run terminal and paste this in and hit enter and type your password etc etc
 
-install 595 nvidia open dkms driver packages
-    sudo pacman -U https://archive.cachyos.org/nvidia/595-beta/nvidia-open-dkms-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/nvidia-utils-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/opencl-nvidia-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/lib32-nvidia-utils-595.45.04-0-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/lib32-opencl-nvidia-595.45.04-0-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/libxnvctrl-595.45.04-1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/nvidia-settings-595.45.04-1-x86_64.pkg.tar.zst
+install 595 nvidia open dkms driver packages:
+
+sudo pacman -U https://archive.cachyos.org/nvidia/595-beta/nvidia-open-dkms-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/nvidia-utils-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/opencl-nvidia-595.45.04-1.1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/lib32-nvidia-utils-595.45.04-0-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/lib32-opencl-nvidia-595.45.04-0-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/libxnvctrl-595.45.04-1-x86_64.pkg.tar.zst https://archive.cachyos.org/nvidia/595-beta/nvidia-settings-595.45.04-1-x86_64.pkg.tar.zst
     
     
 note this is for the 595 nvidia open dkms driver packages, this may be outdated in future so just find a later version of your nvidia dkms drivers and install manually and bob is indeed your uncle.
 
-19. reboot and select your new kernel in your bootloader e.g grub and enjoy :)
+19. reboot and select your new kernel in your bootloader e.g grub
 
+20. open your terminal and run sudo pacman -S alsa-utils
+
+21. open your terminal and run alsaucm listcards and look for your laptop e.g
+
+0: hw:0 
+LENOVO-83F5-LegionPro716IAX10H-LNVNB161216 
+
+22. Lastly open your terminal and run the following command however where the 0 is, needs to match your hw number of your laptop e.g if your laptop shows as hw1 then change all the 0s to 1s etc.
+
+alsaucm -c hw:0 reset
+alsaucm -c hw:0 reload
+systemctl --user restart pipewire pipewire-pulse wireplumber
+amixer sset -c 0 Master 100%
+amixer sset -c 0 Headphone 100%
+amixer sset -c 0 Speaker 100%
+
+23. optional step is to remove the old kernel you no longer need :)
+    
 ## Disclaimer
 
 I, nullnek0, attest that all components of the fix provided here have been tested and work without any apparent harmful effects. The fix components are provided in good faith. However, I (as well as the main fix authors) disclaim all responsibility for any use of this fix and guide:
