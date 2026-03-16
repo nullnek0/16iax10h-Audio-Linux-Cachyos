@@ -255,16 +255,21 @@ sudo pacman -U https://archive.cachyos.org/nvidia/595-beta/nvidia-open-dkms-595.
     
 note this is for the 595 nvidia open dkms driver packages, this may be outdated in future so just find a later version of your nvidia dkms drivers and install manually and bob is indeed your uncle.
 
-19. reboot and select your new kernel in your bootloader e.g grub
+19. open your terminal and run sudo nano /etc/default/grub and find "GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog nvme_load=YES zswap.enabled=0 splash loglevel=3" and add "snd_intel_dspcfg.dsp_driver=3 nvidia-drm.modeset=1" so it should look similar to this: GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog nvme_load=YES zswap.enabled=0 splash loglevel=3 snd_intel_dspcfg.dsp_driver=3 nvidia-drm.modeset=1' and hit control x and y to save this
 
-20. open your terminal and run sudo pacman -S alsa-utils
+20. update grub by using this command in terminal sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-21. open your terminal and run alsaucm listcards and look for your laptop e.g
+
+21. reboot and select your new kernel in your bootloader e.g grub
+
+22. open your terminal and run sudo pacman -S alsa-utils
+
+23. open your terminal and run alsaucm listcards and look for your laptop e.g
 
 0: hw:0 
 LENOVO-83F5-LegionPro716IAX10H-LNVNB161216 
 
-22. Lastly open your terminal and run the following command however where the 0 is, needs to match your hw number of your laptop e.g if your laptop shows as hw1 then change all the 0s to 1s etc.
+24. Lastly open your terminal and run the following command however where the 0 is, needs to match your hw number of your laptop e.g if your laptop shows as hw1 then change all the 0s to 1s etc.
 
 alsaucm -c hw:0 reset
 alsaucm -c hw:0 reload
@@ -273,7 +278,7 @@ amixer sset -c 0 Master 100%
 amixer sset -c 0 Headphone 100%
 amixer sset -c 0 Speaker 100%
 
-23. optional step is to remove the old kernel you no longer need :)
+25. optional step is to remove the old kernel you no longer need :)
     
 ## Disclaimer
 
